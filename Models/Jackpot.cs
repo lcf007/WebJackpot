@@ -12,7 +12,6 @@ namespace WebJackpot.Models
         [Required]
         public string Name { get; set; }
 
-        [Range(1, 100)]
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal CurrentWin { get; set; }

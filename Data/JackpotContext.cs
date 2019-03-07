@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using WebJackpot.Models;
 
 namespace WebJackpot.Data
 {
@@ -9,8 +9,8 @@ namespace WebJackpot.Data
         {
         }
 
-        public DbSet<WebJackpot.Models.Jackpot> Jackpot { get; set; }
-        public DbSet<WebJackpot.Models.Player> Player { get; set; }
-        public DbSet<WebJackpot.Models.TriggeredJackpot> TriggeredJackpot { get; set; }
+        public DbSet<Jackpot> Jackpot { get; set; }
+        public DbSet<Player> Player { get; set; }
+        public DbSet<TriggeredJackpot> TriggeredJackpot { get; set; }
     }
 }
