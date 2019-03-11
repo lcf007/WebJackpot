@@ -13,16 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.JackpotID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PlayerID)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.CurrentWin)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TriggerTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Player)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Jackpot)
             </th>
             <th></th>
         </tr>
@@ -31,16 +31,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.JackpotID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlayerID)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.CurrentWin)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TriggerTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Player.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jackpot.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

@@ -11,18 +11,6 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.JackpotID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.JackpotID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlayerID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlayerID)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CurrentWin)
         </dt>
         <dd class = "col-sm-10">
@@ -33,6 +21,18 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TriggerTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Player)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Player.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Jackpot)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Jackpot.Name)
         </dd>
     </dl>
 </div>

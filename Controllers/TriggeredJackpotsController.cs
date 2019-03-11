@@ -22,7 +22,8 @@ namespace WebJackpot.Controllers
         // GET: TriggeredJackpots
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TriggeredJackpot.ToListAsync());
+            var webJackpotContext = _context.TriggeredJackpot.Include(t => t.Jackpot).Include(t => t.Player);
+            return View(await webJackpotContext.ToListAsync());
         }
 
         // GET: TriggeredJackpots/Details/5
@@ -34,6 +35,8 @@ namespace WebJackpot.Controllers
             }
 
             var triggeredJackpot = await _context.TriggeredJackpot
+                .Include(t => t.Jackpot)
+                .Include(t => t.Player)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (triggeredJackpot == null)
             {
@@ -46,6 +49,8 @@ namespace WebJackpot.Controllers
         // GET: TriggeredJackpots/Create
         public IActionResult Create()
         {
+            ViewData["JackpotID"] = new SelectList(_context.Jackpot, "JackpotID", "Name");
+            ViewData["PlayerID"] = new SelectList(_context.Player, "PlayerID", "Name");
             return View();
         }
 
@@ -62,6 +67,8 @@ namespace WebJackpot.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["JackpotID"] = new SelectList(_context.Jackpot, "JackpotID", "Name", triggeredJackpot.JackpotID);
+            ViewData["PlayerID"] = new SelectList(_context.Player, "PlayerID", "Name", triggeredJackpot.PlayerID);
             return View(triggeredJackpot);
         }
 
@@ -78,6 +85,8 @@ namespace WebJackpot.Controllers
             {
                 return NotFound();
             }
+            ViewData["JackpotID"] = new SelectList(_context.Jackpot, "JackpotID", "Name", triggeredJackpot.JackpotID);
+            ViewData["PlayerID"] = new SelectList(_context.Player, "PlayerID", "Name", triggeredJackpot.PlayerID);
             return View(triggeredJackpot);
         }
 
@@ -113,6 +122,8 @@ namespace WebJackpot.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["JackpotID"] = new SelectList(_context.Jackpot, "JackpotID", "Name", triggeredJackpot.JackpotID);
+            ViewData["PlayerID"] = new SelectList(_context.Player, "PlayerID", "Name", triggeredJackpot.PlayerID);
             return View(triggeredJackpot);
         }
 
@@ -125,6 +136,8 @@ namespace WebJackpot.Controllers
             }
 
             var triggeredJackpot = await _context.TriggeredJackpot
+                .Include(t => t.Jackpot)
+                .Include(t => t.Player)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (triggeredJackpot == null)
             {

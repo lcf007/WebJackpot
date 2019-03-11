@@ -19,5 +19,9 @@ namespace WebJackpot.Models
         [Display(Name = "Trigger Date")]
         [DataType(DataType.DateTime)]
         public DateTime TriggerTime { get; set; }
+
+        public Player Player { get; set; }
+        public Jackpot Jackpot { get; set; }
+
     }
 }
