@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebJackpot.Data;
 
 namespace WebJackpot.Migrations
 {
     [DbContext(typeof(WebJackpotContext))]
-    partial class WebJackpotContextModelSnapshot : ModelSnapshot
+    [Migration("20190308214544_ChangeDB")]
+    partial class ChangeDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,22 +56,6 @@ namespace WebJackpot.Migrations
                     b.ToTable("Player");
                 });
 
-            modelBuilder.Entity("WebJackpot.Models.TriggerCondition", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("JackpotID");
-
-                    b.Property<decimal>("TriggerPoints")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("TriggerCondition");
-                });
-
             modelBuilder.Entity("WebJackpot.Models.TriggeredJackpot", b =>
                 {
                     b.Property<int>("ID")
@@ -87,7 +73,24 @@ namespace WebJackpot.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("JackpotID");
+
+                    b.HasIndex("PlayerID");
+
                     b.ToTable("TriggeredJackpot");
+                });
+
+            modelBuilder.Entity("WebJackpot.Models.TriggeredJackpot", b =>
+                {
+                    b.HasOne("WebJackpot.Models.Jackpot", "Jackpot")
+                        .WithMany()
+                        .HasForeignKey("JackpotID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebJackpot.Models.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

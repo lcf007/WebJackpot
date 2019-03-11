@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebJackpot.Data;
 
 namespace WebJackpot.Migrations
 {
     [DbContext(typeof(WebJackpotContext))]
-    partial class WebJackpotContextModelSnapshot : ModelSnapshot
+    [Migration("20190311211031_AddTrigger4")]
+    partial class AddTrigger4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

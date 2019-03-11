@@ -36,7 +36,10 @@ namespace WebJackpot
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddSignalR();
+            services.AddSignalR(o =>
+            {
+                o.EnableDetailedErrors = true;
+            });
 
             services.AddDbContext<WebJackpotContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("WebJackpotContext")));
@@ -55,6 +58,7 @@ namespace WebJackpot
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

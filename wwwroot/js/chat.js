@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("/WebJackpot/chatHub").build();
 
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
@@ -12,9 +12,6 @@ connection.on("ReceiveMessage", function (user, message) {
 
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
-    connection.invoke("StartGame").catch(function (err) {
-        return console.error(err.toString());
-    });
 }).catch(function (err) {
     return console.error(err.toString());
 });

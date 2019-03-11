@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
@@ -17,7 +18,7 @@ namespace WebJackpot.Hubs
             _context = context;
         }
 
-        public async Task StartGame()
+        public override async Task OnConnectedAsync()
         {
             // Handle Jackpot Logic
             var jackpotContext = await _context.Jackpot.FindAsync(1);
@@ -38,7 +39,23 @@ namespace WebJackpot.Hubs
             // Handle Jackpot Logic
             var jackpotContext = await _context.Jackpot.FindAsync(1);
             jackpotContext.CurrentWin += 1;
+            jackpotContext.CurrentTime = DateTime.Now;
             await _context.SaveChangesAsync();
+
+            var jpTrigger = await _context.TriggerCondition.FindAsync(1);
+            if ( jackpotContext.CurrentWin >= jpTrigger.TriggerPoints)
+            {
+                jackpotContext.CurrentWin -= jpTrigger.TriggerPoints;
+                jackpotContext.CurrentTime = DateTime.Now;
+
+                var jpHistory = new TriggeredJackpot();
+                jpHistory.PlayerID = playerContext.PlayerID;
+                jpHistory.JackpotID = jackpotContext.JackpotID;
+                jpHistory.CurrentWin = jpTrigger.TriggerPoints;
+                jpHistory.TriggerTime = DateTime.Now;
+                _context.Add(jpHistory);
+                await _context.SaveChangesAsync();
+            }
 
             await Clients.All.SendAsync("ReceiveMessage", user, jackpotContext.CurrentWin.ToString());
         }

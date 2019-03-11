@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebJackpot.Models.TriggeredJackpot>
+﻿@model IEnumerable<WebJackpot.Models.TriggerCondition>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,13 +16,7 @@
                 @Html.DisplayNameFor(model => model.JackpotID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PlayerID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CurrentWin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TriggerTime)
+                @Html.DisplayNameFor(model => model.TriggerPoints)
             </th>
             <th></th>
         </tr>
@@ -34,13 +28,7 @@
                 @Html.DisplayFor(modelItem => item.JackpotID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PlayerID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurrentWin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TriggerTime)
+                @Html.DisplayFor(modelItem => item.TriggerPoints)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

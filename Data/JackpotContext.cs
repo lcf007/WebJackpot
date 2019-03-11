@@ -12,5 +12,6 @@ namespace WebJackpot.Data
         public DbSet<Jackpot> Jackpot { get; set; }
         public DbSet<Player> Player { get; set; }
         public DbSet<TriggeredJackpot> TriggeredJackpot { get; set; }
+        public DbSet<WebJackpot.Models.TriggerCondition> TriggerCondition { get; set; }
     }
 }

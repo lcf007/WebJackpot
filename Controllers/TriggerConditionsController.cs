@@ -10,22 +10,22 @@ using WebJackpot.Models;
 
 namespace WebJackpot.Controllers
 {
-    public class TriggeredJackpotsController : Controller
+    public class TriggerConditionsController : Controller
     {
         private readonly WebJackpotContext _context;
 
-        public TriggeredJackpotsController(WebJackpotContext context)
+        public TriggerConditionsController(WebJackpotContext context)
         {
             _context = context;
         }
 
-        // GET: TriggeredJackpots
+        // GET: TriggerConditions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TriggeredJackpot.ToListAsync());
+            return View(await _context.TriggerCondition.ToListAsync());
         }
 
-        // GET: TriggeredJackpots/Details/5
+        // GET: TriggerConditions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var triggeredJackpot = await _context.TriggeredJackpot
+            var triggerCondition = await _context.TriggerCondition
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (triggeredJackpot == null)
+            if (triggerCondition == null)
             {
                 return NotFound();
             }
 
-            return View(triggeredJackpot);
+            return View(triggerCondition);
         }
 
-        // GET: TriggeredJackpots/Create
+        // GET: TriggerConditions/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: TriggeredJackpots/Create
+        // POST: TriggerConditions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,JackpotID,PlayerID,CurrentWin,TriggerTime")] TriggeredJackpot triggeredJackpot)
+        public async Task<IActionResult> Create([Bind("ID,JackpotID,TriggerPoints")] TriggerCondition triggerCondition)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(triggeredJackpot);
+                _context.Add(triggerCondition);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(triggeredJackpot);
+            return View(triggerCondition);
         }
 
-        // GET: TriggeredJackpots/Edit/5
+        // GET: TriggerConditions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var triggeredJackpot = await _context.TriggeredJackpot.FindAsync(id);
-            if (triggeredJackpot == null)
+            var triggerCondition = await _context.TriggerCondition.FindAsync(id);
+            if (triggerCondition == null)
             {
                 return NotFound();
             }
-            return View(triggeredJackpot);
+            return View(triggerCondition);
         }
 
-        // POST: TriggeredJackpots/Edit/5
+        // POST: TriggerConditions/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,JackpotID,PlayerID,CurrentWin,TriggerTime")] TriggeredJackpot triggeredJackpot)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,JackpotID,TriggerPoints")] TriggerCondition triggerCondition)
         {
-            if (id != triggeredJackpot.ID)
+            if (id != triggerCondition.ID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace WebJackpot.Controllers
             {
                 try
                 {
-                    _context.Update(triggeredJackpot);
+                    _context.Update(triggerCondition);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TriggeredJackpotExists(triggeredJackpot.ID))
+                    if (!TriggerConditionExists(triggerCondition.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace WebJackpot.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(triggeredJackpot);
+            return View(triggerCondition);
         }
 
-        // GET: TriggeredJackpots/Delete/5
+        // GET: TriggerConditions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var triggeredJackpot = await _context.TriggeredJackpot
+            var triggerCondition = await _context.TriggerCondition
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (triggeredJackpot == null)
+            if (triggerCondition == null)
             {
                 return NotFound();
             }
 
-            return View(triggeredJackpot);
+            return View(triggerCondition);
         }
 
-        // POST: TriggeredJackpots/Delete/5
+        // POST: TriggerConditions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var triggeredJackpot = await _context.TriggeredJackpot.FindAsync(id);
-            _context.TriggeredJackpot.Remove(triggeredJackpot);
+            var triggerCondition = await _context.TriggerCondition.FindAsync(id);
+            _context.TriggerCondition.Remove(triggerCondition);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TriggeredJackpotExists(int id)
+        private bool TriggerConditionExists(int id)
         {
-            return _context.TriggeredJackpot.Any(e => e.ID == id);
+            return _context.TriggerCondition.Any(e => e.ID == id);
         }
     }
 }
