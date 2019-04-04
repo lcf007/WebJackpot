@@ -22,7 +22,7 @@ namespace WebJackpot.Controllers
         // GET: TriggeredJackpots
         public async Task<IActionResult> Index()
         {
-            var webJackpotContext = _context.TriggeredJackpot.Include(t => t.Jackpot).Include(t => t.Player);
+            var webJackpotContext = _context.TriggeredJackpots.Include(t => t.Jackpot).Include(t => t.Player);
             return View(await webJackpotContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var triggeredJackpot = await _context.TriggeredJackpot
+            var triggeredJackpot = await _context.TriggeredJackpots
                 .Include(t => t.Jackpot)
                 .Include(t => t.Player)
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -49,8 +49,8 @@ namespace WebJackpot.Controllers
         // GET: TriggeredJackpots/Create
         public IActionResult Create()
         {
-            ViewData["JackpotID"] = new SelectList(_context.Jackpot, "JackpotID", "Name");
-            ViewData["PlayerID"] = new SelectList(_context.Player, "PlayerID", "Name");
+            ViewData["JackpotID"] = new SelectList(_context.Jackpots, "JackpotID", "Name");
+            ViewData["PlayerID"] = new SelectList(_context.Players, "PlayerID", "Name");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace WebJackpot.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["JackpotID"] = new SelectList(_context.Jackpot, "JackpotID", "Name", triggeredJackpot.JackpotID);
-            ViewData["PlayerID"] = new SelectList(_context.Player, "PlayerID", "Name", triggeredJackpot.PlayerID);
+            ViewData["JackpotID"] = new SelectList(_context.Jackpots, "JackpotID", "Name", triggeredJackpot.JackpotID);
+            ViewData["PlayerID"] = new SelectList(_context.Players, "PlayerID", "Name", triggeredJackpot.PlayerID);
             return View(triggeredJackpot);
         }
 
@@ -80,13 +80,13 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var triggeredJackpot = await _context.TriggeredJackpot.FindAsync(id);
+            var triggeredJackpot = await _context.TriggeredJackpots.FindAsync(id);
             if (triggeredJackpot == null)
             {
                 return NotFound();
             }
-            ViewData["JackpotID"] = new SelectList(_context.Jackpot, "JackpotID", "Name", triggeredJackpot.JackpotID);
-            ViewData["PlayerID"] = new SelectList(_context.Player, "PlayerID", "Name", triggeredJackpot.PlayerID);
+            ViewData["JackpotID"] = new SelectList(_context.Jackpots, "JackpotID", "Name", triggeredJackpot.JackpotID);
+            ViewData["PlayerID"] = new SelectList(_context.Players, "PlayerID", "Name", triggeredJackpot.PlayerID);
             return View(triggeredJackpot);
         }
 
@@ -122,8 +122,8 @@ namespace WebJackpot.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["JackpotID"] = new SelectList(_context.Jackpot, "JackpotID", "Name", triggeredJackpot.JackpotID);
-            ViewData["PlayerID"] = new SelectList(_context.Player, "PlayerID", "Name", triggeredJackpot.PlayerID);
+            ViewData["JackpotID"] = new SelectList(_context.Jackpots, "JackpotID", "Name", triggeredJackpot.JackpotID);
+            ViewData["PlayerID"] = new SelectList(_context.Players, "PlayerID", "Name", triggeredJackpot.PlayerID);
             return View(triggeredJackpot);
         }
 
@@ -135,7 +135,7 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var triggeredJackpot = await _context.TriggeredJackpot
+            var triggeredJackpot = await _context.TriggeredJackpots
                 .Include(t => t.Jackpot)
                 .Include(t => t.Player)
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -152,15 +152,15 @@ namespace WebJackpot.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var triggeredJackpot = await _context.TriggeredJackpot.FindAsync(id);
-            _context.TriggeredJackpot.Remove(triggeredJackpot);
+            var triggeredJackpot = await _context.TriggeredJackpots.FindAsync(id);
+            _context.TriggeredJackpots.Remove(triggeredJackpot);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TriggeredJackpotExists(int id)
         {
-            return _context.TriggeredJackpot.Any(e => e.ID == id);
+            return _context.TriggeredJackpots.Any(e => e.ID == id);
         }
     }
 }

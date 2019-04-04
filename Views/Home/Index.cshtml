@@ -3,29 +3,42 @@
 }
 
 <div class="container">
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-md-4">
-            <div>
-                Jackpot Win
-            </div>
-            <div>
-                <input type="text" class="align-middle" id="jackpotWin" readonly />
-            </div>
-            <div>
-                Player Name
-            </div>
-            <div>
-                <input type="text" id="playerName" />
-            </div>
-            <div>
-                <input type="button" id="sendButton" value="PlayGame" />
-            </div>
-        </div>
+    
+    <table class="table" id="jpTable">
+        <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Jackpot Points
+            </th>
+            <th>
+                Date Time
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div>
+        Player Name
     </div>
+    <div>
+        <input type="text" id="playerName"/>
+    </div>
+    <div>
+        <input type="button" id="sendButton" value="PlayGame"/>
+    </div>
+
     <div class="row">
         <div class="col-12">
-            <hr />
+            <hr/>
         </div>
     </div>
     <div class="row">
@@ -36,4 +49,4 @@
     </div>
 </div>
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
+<script src="~/js/msg.js"></script>

@@ -1,13 +1,22 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/WebJackpot/chatHub").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("/WebJackpot/MessageHub").build();
 
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
+function UpdateJackpot(obj) {
+    $("#jpTable").find("tr:gt(0)").remove();
+    $.each(obj,
+        function (key, value) {
+            var markup = "<tr><td>" + value.JackpotID + "</td><td>" + value.Name + "</td><td>" + value.CurrentWin + "</td><td>" + value.CurrentTime + "</td></tr>";
+            $("#jpTable").append(markup);
+        });
+}
+
 connection.on("ReceiveMessage", function (user, message) {
     var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    document.getElementById("jackpotWin").value = msg;
+    UpdateJackpot($.parseJSON(msg));
 });
 
 connection.start().then(function () {

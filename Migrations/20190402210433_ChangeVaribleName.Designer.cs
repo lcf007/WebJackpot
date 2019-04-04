@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebJackpot.Data;
 
 namespace WebJackpot.Migrations
 {
     [DbContext(typeof(WebJackpotContext))]
-    partial class WebJackpotContextModelSnapshot : ModelSnapshot
+    [Migration("20190402210433_ChangeVaribleName")]
+    partial class ChangeVaribleName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,9 +36,6 @@ namespace WebJackpot.Migrations
                         .IsRequired()
                         .HasMaxLength(60);
 
-                    b.Property<decimal>("TriggerPoints")
-                        .HasColumnType("decimal(18, 2)");
-
                     b.HasKey("JackpotID");
 
                     b.ToTable("Jackpots");
@@ -55,6 +54,22 @@ namespace WebJackpot.Migrations
                     b.HasKey("PlayerID");
 
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("WebJackpot.Models.TriggerCondition", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("JackpotID");
+
+                    b.Property<decimal>("TriggerPoints")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("TriggerConditions");
                 });
 
             modelBuilder.Entity("WebJackpot.Models.TriggeredJackpot", b =>

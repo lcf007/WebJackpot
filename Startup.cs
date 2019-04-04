@@ -64,7 +64,7 @@ namespace WebJackpot
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<ChatHub>("/chatHub");
+                routes.MapHub<MessageHub>("/MessageHub");
             });
 
             app.UseMvc(routes =>

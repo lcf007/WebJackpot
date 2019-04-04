@@ -22,7 +22,7 @@ namespace WebJackpot.Controllers
         // GET: Jackpots
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Jackpot.ToListAsync());
+            return View(await _context.Jackpots.ToListAsync());
         }
 
         // GET: Jackpots/Details/5
@@ -33,7 +33,7 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var jackpot = await _context.Jackpot
+            var jackpot = await _context.Jackpots
                 .FirstOrDefaultAsync(m => m.JackpotID == id);
             if (jackpot == null)
             {
@@ -54,7 +54,7 @@ namespace WebJackpot.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("JackpotID,Name,CurrentWin,CurrentTime")] Jackpot jackpot)
+        public async Task<IActionResult> Create([Bind("JackpotID,Name,CurrentWin,TriggerPoints,CurrentTime")] Jackpot jackpot)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var jackpot = await _context.Jackpot.FindAsync(id);
+            var jackpot = await _context.Jackpots.FindAsync(id);
             if (jackpot == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace WebJackpot.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("JackpotID,Name,CurrentWin,CurrentTime")] Jackpot jackpot)
+        public async Task<IActionResult> Edit(int id, [Bind("JackpotID,Name,CurrentWin,TriggerPoints,CurrentTime")] Jackpot jackpot)
         {
             if (id != jackpot.JackpotID)
             {
@@ -124,7 +124,7 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var jackpot = await _context.Jackpot
+            var jackpot = await _context.Jackpots
                 .FirstOrDefaultAsync(m => m.JackpotID == id);
             if (jackpot == null)
             {
@@ -139,15 +139,15 @@ namespace WebJackpot.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var jackpot = await _context.Jackpot.FindAsync(id);
-            _context.Jackpot.Remove(jackpot);
+            var jackpot = await _context.Jackpots.FindAsync(id);
+            _context.Jackpots.Remove(jackpot);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool JackpotExists(int id)
         {
-            return _context.Jackpot.Any(e => e.JackpotID == id);
+            return _context.Jackpots.Any(e => e.JackpotID == id);
         }
     }
 }

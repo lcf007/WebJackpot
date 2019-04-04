@@ -22,7 +22,7 @@ namespace WebJackpot.Controllers
         // GET: Players
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Player.ToListAsync());
+            return View(await _context.Players.ToListAsync());
         }
 
         // GET: Players/Details/5
@@ -33,7 +33,7 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var player = await _context.Player
+            var player = await _context.Players
                 .FirstOrDefaultAsync(m => m.PlayerID == id);
             if (player == null)
             {
@@ -73,7 +73,7 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var player = await _context.Player.FindAsync(id);
+            var player = await _context.Players.FindAsync(id);
             if (player == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace WebJackpot.Controllers
                 return NotFound();
             }
 
-            var player = await _context.Player
+            var player = await _context.Players
                 .FirstOrDefaultAsync(m => m.PlayerID == id);
             if (player == null)
             {
@@ -139,15 +139,15 @@ namespace WebJackpot.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var player = await _context.Player.FindAsync(id);
-            _context.Player.Remove(player);
+            var player = await _context.Players.FindAsync(id);
+            _context.Players.Remove(player);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PlayerExists(int id)
         {
-            return _context.Player.Any(e => e.PlayerID == id);
+            return _context.Players.Any(e => e.PlayerID == id);
         }
     }
 }

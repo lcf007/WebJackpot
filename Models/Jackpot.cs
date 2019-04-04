@@ -16,9 +16,12 @@ namespace WebJackpot.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal CurrentWin { get; set; }
 
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal TriggerPoints { get; set; }
+
         [Display(Name = "Current Date")]
         [DataType(DataType.DateTime)]
         public DateTime CurrentTime { get; set; }
-
     }
 }

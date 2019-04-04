@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebJackpot.Data;
 
 namespace WebJackpot.Migrations
 {
     [DbContext(typeof(WebJackpotContext))]
-    partial class WebJackpotContextModelSnapshot : ModelSnapshot
+    [Migration("20190403020535_AddFKInJackpot")]
+    partial class AddFKInJackpot
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,10 +36,13 @@ namespace WebJackpot.Migrations
                         .IsRequired()
                         .HasMaxLength(60);
 
-                    b.Property<decimal>("TriggerPoints")
-                        .HasColumnType("decimal(18, 2)");
+                    b.Property<int>("TriggerConditionID");
+
+                    b.Property<int?>("TriggerConditionID1");
 
                     b.HasKey("JackpotID");
+
+                    b.HasIndex("TriggerConditionID1");
 
                     b.ToTable("Jackpots");
                 });
@@ -55,6 +60,22 @@ namespace WebJackpot.Migrations
                     b.HasKey("PlayerID");
 
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("WebJackpot.Models.TriggerCondition", b =>
+                {
+                    b.Property<int>("TriggerConditionID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("JackpotID");
+
+                    b.Property<decimal>("TriggerPoints")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.HasKey("TriggerConditionID");
+
+                    b.ToTable("TriggerConditions");
                 });
 
             modelBuilder.Entity("WebJackpot.Models.TriggeredJackpot", b =>
@@ -79,6 +100,13 @@ namespace WebJackpot.Migrations
                     b.HasIndex("PlayerID");
 
                     b.ToTable("TriggeredJackpots");
+                });
+
+            modelBuilder.Entity("WebJackpot.Models.Jackpot", b =>
+                {
+                    b.HasOne("WebJackpot.Models.TriggerCondition", "TriggerCondition")
+                        .WithMany()
+                        .HasForeignKey("TriggerConditionID1");
                 });
 
             modelBuilder.Entity("WebJackpot.Models.TriggeredJackpot", b =>
