@@ -44,12 +44,9 @@ namespace WebJackpot
                 o.EnableDetailedErrors = true;
             });
 
-            services.AddDbContext<WebJackpotContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("WebJackpotContext")));
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("WebJackpotContext")));
+                    Configuration.GetConnectionString("WebJackpotBbConnectionString")));
 
             services.AddDefaultIdentity<WebJackpotUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)

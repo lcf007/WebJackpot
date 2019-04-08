@@ -11,14 +11,15 @@ using WebJackpot.Models;
 using Newtonsoft.Json.Converters;
 using WebJackpot.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace WebJackpot.Hubs
 {
     public class MessageHub : Hub
     {
-        private readonly WebJackpotContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public MessageHub(WebJackpotContext context,
+        public MessageHub(ApplicationDbContext context,
             IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
@@ -36,6 +37,8 @@ namespace WebJackpot.Hubs
         {
             // Find Player In DB.
             var currPlayer = _httpContextAccessor.HttpContext.User.Identity;
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            // or
 
             // Handle Jackpot Logic
             var jackpots = await _context.Jackpots
@@ -49,7 +52,7 @@ namespace WebJackpot.Hubs
                     i.CurrentWin -= i.TriggerPoints;
                     var jpHistory = new TriggeredJackpot()
                     {
-                        PlayerID = 0,
+                        UserId = userId,
                         JackpotID = i.JackpotID,
                         CurrentWin = i.TriggerPoints,
                         TriggerTime = DateTime.Now

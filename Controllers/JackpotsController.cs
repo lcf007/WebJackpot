@@ -14,9 +14,9 @@ namespace WebJackpot.Controllers
     [Authorize]
     public class JackpotsController : Controller
     {
-        private readonly WebJackpotContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public JackpotsController(WebJackpotContext context)
+        public JackpotsController(ApplicationDbContext context)
         {
             _context = context;
         }

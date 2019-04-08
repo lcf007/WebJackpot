@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebJackpot.Areas.Identity.Data;
 
 namespace WebJackpot.Models
 {
@@ -9,7 +10,7 @@ namespace WebJackpot.Models
         public int ID { get; set; }
 
         public int JackpotID { get; set; }
-        public int PlayerID { get; set; }
+        public string UserId { get; set; }
 
         [Range(1, 100)]
         [DataType(DataType.Currency)]
@@ -20,7 +21,7 @@ namespace WebJackpot.Models
         [DataType(DataType.DateTime)]
         public DateTime TriggerTime { get; set; }
 
-        public Player Player { get; set; }
+        public WebJackpotUser Player { get; set; }
         public Jackpot Jackpot { get; set; }
 
     }

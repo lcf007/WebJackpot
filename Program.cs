@@ -27,7 +27,7 @@ namespace WebJackpot
 
                 try
                 {
-                    var context = services.GetRequiredService<WebJackpotContext>();
+                    var context = services.GetRequiredService<ApplicationDbContext>();
                     context.Database.Migrate();
                     //SeedData.Initialize(services);
 

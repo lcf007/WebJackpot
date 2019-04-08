@@ -26,21 +26,23 @@
         </tbody>
     </table>
 
-    <div>
-        Player Name
+    <div class="row">
+        <div class="col-12">
+            <hr/>
+        </div>
     </div>
-    <div>
-        <input type="text" id="playerName"/>
-    </div>
+
     <div>
         @if (!User.Identity.IsAuthenticated)
         {
-            @*<input type="button" id="login"  asp-area="Identity" asp-page="/Account/Login" value="Login"/>*@
             <a class="btn btn-primary" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
         }
         else
         {
-            <input class="btn btn-primary" type="button" id="sendButton" value="PlayGame"/>
+            <span>Welcome: @User.Identity.Name</span>
+            <br />
+            <br />
+            <input class="btn btn-primary" type="button" id="sendButton" value="PlayGame" />
         }
     </div>
 
