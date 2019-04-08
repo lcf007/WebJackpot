@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,8 @@ using WebJackpot.Models;
 
 namespace WebJackpot.Controllers
 {
+    [Authorize]
+
     public class TriggeredJackpotsController : Controller
     {
         private readonly WebJackpotContext _context;

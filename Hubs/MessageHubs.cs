@@ -4,20 +4,25 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using WebJackpot.Data;
 using WebJackpot.Models;
 using Newtonsoft.Json.Converters;
+using WebJackpot.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebJackpot.Hubs
 {
     public class MessageHub : Hub
     {
         private readonly WebJackpotContext _context;
-
-        public MessageHub(WebJackpotContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public MessageHub(WebJackpotContext context,
+            IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public override async Task OnConnectedAsync()
@@ -27,17 +32,10 @@ namespace WebJackpot.Hubs
             await Clients.All.SendAsync("ReceiveMessage", "root", JsonConvert.SerializeObject(jackpots, new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd HH:mm:ss tt" }));
         }
 
-        public async Task PlayGame(string user, string message)
+        public async Task PlayGame(string message)
         {
             // Find Player In DB.
-            var currPlayer = await _context.Players.FirstOrDefaultAsync(m => m.Name == user)
-                ;
-            if (currPlayer == null)
-            {
-                var player = new Player();
-                player.Name = user;
-                _context.Add(player);
-            }
+            var currPlayer = _httpContextAccessor.HttpContext.User.Identity;
 
             // Handle Jackpot Logic
             var jackpots = await _context.Jackpots
@@ -51,7 +49,7 @@ namespace WebJackpot.Hubs
                     i.CurrentWin -= i.TriggerPoints;
                     var jpHistory = new TriggeredJackpot()
                     {
-                        PlayerID = currPlayer.PlayerID,
+                        PlayerID = 0,
                         JackpotID = i.JackpotID,
                         CurrentWin = i.TriggerPoints,
                         TriggerTime = DateTime.Now
@@ -62,7 +60,7 @@ namespace WebJackpot.Hubs
             await _context.SaveChangesAsync();
 
             jackpots = await _context.Jackpots.ToListAsync();
-            await Clients.All.SendAsync("ReceiveMessage", user, JsonConvert.SerializeObject(jackpots));
+            await Clients.All.SendAsync("ReceiveMessage", currPlayer.Name, JsonConvert.SerializeObject(jackpots));
         }
     }
 }

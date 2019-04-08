@@ -33,7 +33,15 @@
         <input type="text" id="playerName"/>
     </div>
     <div>
-        <input type="button" id="sendButton" value="PlayGame"/>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            @*<input type="button" id="login"  asp-area="Identity" asp-page="/Account/Login" value="Login"/>*@
+            <a class="btn btn-primary" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        }
+        else
+        {
+            <input class="btn btn-primary" type="button" id="sendButton" value="PlayGame"/>
+        }
     </div>
 
     <div class="row">

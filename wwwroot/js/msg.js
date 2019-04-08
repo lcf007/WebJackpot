@@ -26,9 +26,8 @@ connection.start().then(function () {
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    var user = document.getElementById("playerName").value;
     var message = "PlayGame";
-    connection.invoke("PlayGame", user, message).catch(function (err) {
+    connection.invoke("PlayGame", message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
